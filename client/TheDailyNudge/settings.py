@@ -37,6 +37,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    "Backend",
 ]
 
 MIDDLEWARE = [
@@ -72,6 +73,16 @@ WSGI_APPLICATION = 'TheDailyNudge.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/6.0/ref/settings/#databases
 
+"""
+sqlite 3 used for testing until postgresql is set up and working; 
+uncomment the following code and comment out the postgresql code to use sqlite3
+"""
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.sqlite3',
+#         'NAME': BASE_DIR / 'db.sqlite3',
+#     }
+# }
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
