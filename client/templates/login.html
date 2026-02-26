@@ -10,6 +10,10 @@
 
   <form method="post">
     {% csrf_token %}
+    {% if error %}
+      <p>{{ error }}</p>
+    {% endif %}
+
     <div>
       <label for="username">Username</label>
       <input type="text" id="username" name="username" required />
@@ -22,5 +26,7 @@
 
     <button type="submit">Sign In</button>
   </form>
+
+  <p>New here? <a href="{% url 'signup' %}">Create an account</a></p>
 </body>
 </html>
