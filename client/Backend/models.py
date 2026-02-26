@@ -4,7 +4,7 @@ from django.contrib.auth.models import User
 class Habit(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     name = models.CharField(max_length=200)
-    frequency = models.IntegerField(default=1)  # times per week/day
+    frequency = models.IntegerField(default=1)  # days before repeating
 
     def __str__(self):
         return f"{self.user.username} - {self.name}"

@@ -77,7 +77,7 @@ def manage_habits(request):
 
         if not name:
             messages.error(request, "Habit name cannot be empty.")
-            return redirect('manage_habits')
+            return redirect('managehabits')
 
         # Convert frequency to integer and handle invalid input
         try:
@@ -86,7 +86,7 @@ def manage_habits(request):
                 raise ValueError
         except (ValueError, TypeError):
             messages.error(request, "Frequency must be a positive integer.")
-            return redirect('manage_habits')
+            return redirect('managehabits')
 
         # Create habit
         Habit.objects.create(
@@ -95,8 +95,8 @@ def manage_habits(request):
             frequency=frequency
             )
         messages.success(request, "Habit added successfully!")
-        return redirect('manage_habits')
+        return redirect('managehabits')
 
     # GET request — show all habits
     habits = request.user.habit_set.all()
-    return render(request, 'manage_habits.html', {'habits': habits})
+    return render(request, 'managehabits.html', {'habits': habits})
