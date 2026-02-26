@@ -13,7 +13,7 @@ to be updated later likely by frontend teammate.
 <body>
     <h1>Welcome, {{ request.user.username }}!</h1>
     <p>Habits will appear here.</p>
-    <a href="/logout/">Logout</a>
+    <a href="{% url 'logout' %}">Logout</a>
 </body>
 
 </html>
