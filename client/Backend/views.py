@@ -1,6 +1,24 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
+from datetime import date, timedelta
+from Backend.models import Habit, Completion
+
+# Helper function to calculate the current streak for a habit
+def calculate_streak(habit):
+    today = date.today()
+    streak = 0
+    current_day = today
+
+    while True:
+        exists = Completion.objects.filter(habit=habit, date=current_day).exists()
+        if exists:
+            streak += 1
+            current_day -= timedelta(days=1)
+        else:
+            break
+    return streak
+
 
 def login_view(request):
     error = None
@@ -22,4 +40,10 @@ def logout_view(request):
 @login_required(login_url='login')
 def dashboard(request):
     habits = request.user.habit_set.all()
-    return render(request, 'dashboard.html', {'habits': habits})
+    habit_data = []
+    for habit in habits:
+        habit_data.append({
+            'habit': habit,
+            'streak': calculate_streak(habit),
+        })
+    return render(request, 'dashboard.html', {'habit_data': habit_data})
