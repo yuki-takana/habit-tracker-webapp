@@ -1,4 +1,4 @@
-# TheDailyNudge-HabitTrackerWebApp
+# HabitTrackerWebApp
 # Project Name: 
 The Daily Nudge 
 ## Project summary: 
