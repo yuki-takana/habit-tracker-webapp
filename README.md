@@ -21,7 +21,7 @@ Git
 Python 3.12+ and pip
 A virtual environment tool (recommended: built-in venv)
 PostgreSQL running locally (default port 5432)
-A database/user matching current settings (habittracker, team322, pass322), or updated local config
+A database/user matching current updated local config
 ### Add-ons 
 Django==6.0.2: Core web framework for routing, templates, models, and auth.
 psycopg2-binary==2.9.11: PostgreSQL adapter used by Django.
