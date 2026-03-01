@@ -17,19 +17,54 @@ and adjust the existing ones.
 ## Installation
 As of now, TheDailyNudge-HabitTrackerWebApp is a Django web app backed by PostgreSQL.
 ### Prerequisites
-Git
-Python 3.12+ and pip
-A virtual environment tool (recommended: built-in venv)
-PostgreSQL running locally (default port 5432)
-A database/user matching current updated local config
+- Git
+- Python 3.12+ and pip
+- A virtual environment tool (recommended: built-in venv)
+- PostgreSQL running locally (default port 5432)
+- A database/user matching current updated local config
 ### Add-ons 
-Django==6.0.2: Core web framework for routing, templates, models, and auth.
-psycopg2-binary==2.9.11: PostgreSQL adapter used by Django.
-django-environ==0.13.0: Reads environment variables for secure configuration.
-asgiref==3.11.1: ASGI support used by Django runtime.
-sqlparse==0.5.5: SQL parsing utility used by Django internals.
-tzdata==2025.3: Time zone database for consistent date/time handling.
+- Django==6.0.2: Core web framework for routing, templates, models, and auth.
+- psycopg2-binary==2.9.11: PostgreSQL adapter used by Django.
+- django-environ==0.13.0: Reads environment variables for secure configuration.
+- asgiref==3.11.1: ASGI support used by Django runtime.
+- sqlparse==0.5.5: SQL parsing utility used by Django internals.
+- tzdata==2025.3: Time zone database for consistent date/time handling.
 ### Installation Steps
-TODO: Describe the installation process (making sure you mention `bundle install`).
-Instructions need to be such that a user can just copy/paste the commands to get
-things set up and running.
+1. **Clone the repository**
+```
+git clone https://github.com/WSU-CPTS322-SP26/HabitTrackerWebApp.git
+cd HabitTrackerWebApp
+```
+2. **Install dependencies**
+```
+pip install -r requirements.txt
+```
+3. **Set up local database** Make sure PostgreSQL is running, then create a database and user matching the credentials in `settings.py`
+```
+CREATE USER team322 WITH PASSWORD 'pass322';
+CREATE DATABASE habittracker OWNER team322;
+```
+4. **Apply datbase migrations**
+```
+cd client
+python manage.py migrate
+```
+5. **Start the app**
+```
+python manage.py runserver
+```
+The app will be available at `http://127.0.0.1:8000/`
+
+## Functionality
+**Login Page** - Existing users can log in with their username and password
+
+**Create Account Page** - New users can register by choosing a username and password.
+
+**Dashboard** - This is the main page after logging in, where you can view all of your current habits. Each habit is displayed with its name and streak.
+
+**Manage Habits Page** - Use this page to add new habits to the tracker. Press "Add Habit" then fill out the habit details and press "Add" to save it. The habit will then appear on the dashboard.
+
+## Known Problems
+**PostgreSQL must be running locally** - The app requires a local PostgreSQL instance to be running in order to connect to the database. If you see a database connection error on startup, make sure PostgreSQL is installed and running on your machine before launching the app.
+
+## Additional Documentation
