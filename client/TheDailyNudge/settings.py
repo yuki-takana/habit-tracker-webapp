@@ -11,21 +11,31 @@ https://docs.djangoproject.com/en/6.0/ref/settings/
 """
 
 from pathlib import Path
+import environ
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
+PROJECT_ROOT = BASE_DIR.parent
+
+env = environ.Env(
+    DEBUG=(bool, True),
+)
+environ.Env.read_env(PROJECT_ROOT / ".env")
 
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/6.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-@h9_$f0c#(0f)!76p%cejol#a6!ibn8gn#sxo#-(&ljo3gu%p8'
+SECRET_KEY = env(
+    "SECRET_KEY",
+    default="django-insecure-change-me-before-deploy",
+)
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = env("DEBUG")
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = env.list("ALLOWED_HOSTS", default=["127.0.0.1", "localhost"])
 
 
 # Application definition
@@ -73,25 +83,8 @@ WSGI_APPLICATION = 'TheDailyNudge.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/6.0/ref/settings/#databases
 
-"""
-sqlite 3 used for testing until postgresql is set up and working; 
-uncomment the following code and comment out the postgresql code to use sqlite3
-"""
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.sqlite3',
-#         'NAME': BASE_DIR / 'db.sqlite3',
-#     }
-# }
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'habittracker',
-        'USER': 'team322',
-        'PASSWORD': 'pass322',
-        'HOST': 'localhost',
-        'PORT': '5432',
-    }
+    "default": env.db(default=f"sqlite:///{BASE_DIR / 'db.sqlite3'}"),
 }
 
 
