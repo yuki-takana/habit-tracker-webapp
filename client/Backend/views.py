@@ -1,4 +1,4 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import UserCreationForm
@@ -100,3 +100,40 @@ def manage_habits(request):
     # GET request — show all habits
     habits = request.user.habit_set.all()
     return render(request, 'managehabits.html', {'habits': habits})
+
+@login_required(login_url='login')
+def edit_habit(request, habit_id):
+    habit = get_object_or_404(Habit, id=habit_id, user=request.user)
+
+    if request.method == 'POST':
+        name = request.POST.get('name')
+        frequency = request.POST.get('frequency')
+
+        if not name:
+            messages.error(request, "Habit name cannot be empty.")
+            return redirect('managehabits')
+
+        try:
+            frequency = int(frequency)
+            if frequency < 1:
+                raise ValueError
+        except (ValueError, TypeError):
+            messages.error(request, "Frequency must be a positive integer.")
+            return redirect('managehabits')
+
+        habit.name = name
+        habit.frequency = frequency
+        habit.save()
+
+        messages.success(request, "Habit updated successfully!")
+        return redirect('managehabits')
+    
+@login_required(login_url='login')
+def delete_habit(request, habit_id):
+    habit = get_object_or_404(Habit, id=habit_id, user=request.user)
+
+    if request.method == 'POST':
+        habit.delete()
+        messages.success(request, "Habit deleted successfully!")
+
+    return redirect('managehabits')
