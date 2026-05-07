@@ -1,7 +1,7 @@
 # HabitTrackerWebApp
 # Project Name: 
 The Daily Nudge 
-## Project summary: 
+## Project summary:  
 The project will be a web app that can be used by users to create habits that repeat over a
 specified frequency, as well as manage those habits and adjust them to suit their goals. The UI
 will is intuitive to make tracking habits the main focus, while remaining easy to do other
